@@ -1,0 +1,32 @@
+<div class="w3-card-2">
+	<div class="w3-row">
+		<div class="w3-col m4 l4">Projects</div>
+		<div><button onclick="views.projects.addproject();">Add Project</button></div>
+		<div class="w3-container" id="lstProjects">
+			<div id="tmplProject">
+				<input type="hidden" id="id"/>
+				<div class="w3-bar w3-black">
+					<a href="#" onclick="util.formcontrols.toggleaccordian();" class="w3-button w3-grey">
+						Project <span id="name"></span>>>
+					</a>&nbsp;&nbsp;
+					<a href="#" onclick="views.projects.delete();" class="w3-button w3-grey">
+						Delete
+					</a>&nbsp;&nbsp;	
+					<a href="#" onclick="views.projects.edit();" class="w3-button w3-grey">
+						Edit
+					</a>
+				</div>
+				<div class="w3-container w3-hide accordian">
+					<div class="w3-row">
+						Description <span id="description"></span>
+					</div>
+					<div class="w3-row">
+						<button onclick="views.projects.viewmissions();">
+							Missions (Assigned <span id="assigned"></span>, Completed <span id="completed"></span>)
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

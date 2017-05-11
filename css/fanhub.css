@@ -1,0 +1,24 @@
+.center {
+    margin: 0 auto;              
+    background-size: 100% 100%;
+    width: 94%;
+    padding: 20px;
+}        
+
+body {
+    background-color: #ecdfdf
+}
+
+#divProfile {
+    color: white;              
+    text-shadow: 2px 2px black;
+}
+
+section {background-color: white}
+.section-header {border-bottom: 2px solid grey;}
+
+button {
+    background-color: transparent;
+    border: none;
+}
+

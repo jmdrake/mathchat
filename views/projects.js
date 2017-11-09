@@ -1,1 +1,0 @@
-$("#projects").load("./views/projects.html");

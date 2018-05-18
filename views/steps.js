@@ -1,4 +1,4 @@
-$("#tasks").load("./views/tasks.html", function(){
+$("#tasks").load("./views/steps.html", function(){
     showTasks(null);
 });
 
@@ -30,30 +30,11 @@ function viewsTaskListInit() {
         })
     });
     
-    $(".btnVideo").on("click", function(event){
+    $(".btnShowVideo").on("click", function(event){
         var taskDiv = $(this).parent().parent();
-        $("#mdlAddVideo").find("#taskid").val(taskDiv.find("#_id").val());
-        $("#mdlAddVideo").find("#video").val(taskDiv.find("#video").val());
-        $("#mdlAddVideo").show();
+        $("#mdlShowVideo").find("iframe").attr("src", taskDiv.find("#video").val());
+        $("#mdlShowVideo").show();
     });
-    
-    $("#btnSaveVideo").on("click", function(event){
-        var taskid = $("#mdlAddVideo").find("#taskid").val();
-        var video = $("#mdlAddVideo").find("#video").val();
-        ctrlsTasksGetTask(taskid, function(task){
-            task["video"] = video;
-            ctrlsTasksUpdateTask(task);
-            document.getElementById('mdlAddVideo').style.display='none';
-        }); 
-    });
-    
-    $(".btnToggleTimer").on("click", function(event){
-        event.stopImmediatePropagation();
-        if(typeof(w)=="undefined")
-            startWorker();
-        else
-            stopWorker();
-    })
     
     $(".btnSubtask").on("click", function(event){
         event.stopImmediatePropagation();
@@ -119,14 +100,10 @@ function showTasks(id) {
         utilsFormcontrolsPopulateDivList($("#lstTasks"), tasklist, tmplTask, {
             callback : function(div, data){
                 div.find("#namefield").val(data["name"]);
-                if(data["completed"]){
-                    div.find("label").addClass("completed");
-                    div.find(".togglecompleted").prop("checked", true);
-                }
                 div.attr("id", "task" + data["_id"]);
-                var timeelapsed = data["timeelapsed"] ? data["timeelapsed"] : 0;
-                div.find(".timeelapsed").val(timeelapsed);
-                div.find(".lblTimeelapsed").html(formatms(timeelapsed));
+                if(!data["video"] || data["video"].trim()==""){
+                    div.find(".btnShowVideo").hide();
+                }
             }
         });
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);

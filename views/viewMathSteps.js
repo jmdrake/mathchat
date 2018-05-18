@@ -1,13 +1,13 @@
-$("#tasks").load("./views/tasks.html", function(){
+$("#mathsteps").load("./views/viewMathSteps.html", function(){
     showTasks(null);
 });
 
-function viewsTaskListInit() {
-    $(".namefield").on("change", function(event){
+function viewMathStepsInit() {
+    $(".stepfield").on("change", function(event){
         var taskDiv = $(this).parent().parent();
         var id = taskDiv.find("#_id").val();
         ctrlsTasksGetTask(id, function(task){
-            task["name"] = taskDiv.find("#namefield").val();
+            task["name"] = taskDiv.find("#stepfield").val();
             ctrlsTasksUpdateTask(task);
         });
     });
@@ -15,36 +15,18 @@ function viewsTaskListInit() {
     $(".btnDelete").on("click", function(event){
         var taskDiv = $(this).parent().parent();
         var id = taskDiv.find("#_id").val();
-        ctrlsTasksGetTaskList(id, function(results){
-            if(results.length == 0){
-                var r = confirm("Delete this task?");
-                if (r == true) {
-                    ctrlsTasksGetTask(id, function(task){
-                        ctrlsTasksDeleteTask(task);                    
-                        taskDiv.hide();
-                    })                      
-                }
-            } else {
-                alert("Cannot delete task with subtasks")
-            }
-        })
+        ctrlsTasksGetTask(id, function(task){
+            ctrlsTasksDeleteTask(task);
+            taskDiv.hide();
+        })        
     });
     
-    $(".btnVideo").on("click", function(event){
+    $(".btnTimer").on("click", function(event){
         var taskDiv = $(this).parent().parent();
-        $("#mdlAddVideo").find("#taskid").val(taskDiv.find("#_id").val());
-        $("#mdlAddVideo").find("#video").val(taskDiv.find("#video").val());
-        $("#mdlAddVideo").show();
-    });
-    
-    $("#btnSaveVideo").on("click", function(event){
-        var taskid = $("#mdlAddVideo").find("#taskid").val();
-        var video = $("#mdlAddVideo").find("#video").val();
-        ctrlsTasksGetTask(taskid, function(task){
-            task["video"] = video;
-            ctrlsTasksUpdateTask(task);
-            document.getElementById('mdlAddVideo').style.display='none';
-        }); 
+        $("#mdlTimer").find("#taskid").val(taskDiv.attr("id"))
+        $("#mdlTimer").find("#timeelapsed").val(taskDiv.find(".timeelapsed").val());
+        $("#lblTimeelapsed").html(formatms(taskDiv.find(".timeelapsed").val()))
+        $("#mdlTimer").show();
     });
     
     $(".btnToggleTimer").on("click", function(event){
@@ -118,7 +100,6 @@ function showTasks(id) {
     ctrlsTasksGetTaskList(id, function(tasklist){
         utilsFormcontrolsPopulateDivList($("#lstTasks"), tasklist, tmplTask, {
             callback : function(div, data){
-                div.find("#namefield").val(data["name"]);
                 if(data["completed"]){
                     div.find("label").addClass("completed");
                     div.find(".togglecompleted").prop("checked", true);
@@ -129,22 +110,19 @@ function showTasks(id) {
                 div.find(".lblTimeelapsed").html(formatms(timeelapsed));
             }
         });
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         viewsEditlabelInit();
         viewsTaskListInit();
     });
 }
 
-function viewsTasksAddTask(){
+function viewMathStepsAddStep(){
     ctrlsTasksAddTask($("#newtask").val(), $("#parent").val(), function(newTaskDoc){
         var newTaskItem = utilsFormcontrolsCloneDiv($("#tmplTask"), newTaskDoc, "");
-        newTaskItem.find("#namefield").val(newTaskDoc["name"]);
         $("#lstTasks").append(newTaskItem);
         viewsTaskListInit();
         viewsEditlabelInit();
         newTaskItem.show();
         $("#newtask").val("");
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);        
     })
 }
 

@@ -1,0 +1,27 @@
+<div class="w3-container">
+	<div class="w3-card-4 w3-white">
+		<div class="w3-row" id="parentheader" style="display:none"><label id="header"></label><button id="btnUpLevel"><i class="fa fa-level-up"></i></button></div>
+		<div class="w3-row w3-large w3-border-bottom w3-border-blue">
+			<div class="w3-col w3-col m8 s8 l8 w3-margin-left">
+				<input placeholder="New task" style="width:100%; height:20px" id="newtask" onchange="viewsMathStepsAddStep();"/>
+			</div>
+			<input type="hidden" id="parent"/>
+		</div>
+		<div id="lstSteps">
+			<div class="w3-row w3-border-bottom w3-border-blue" id="tmplMathStep">
+				<input type="hidden" id="_id"/>
+				<div class="w3-col m1 l1 s1 w3-border-right w3-border-red w3-margin-left">
+				    &nbsp;
+				</div>
+			    <div class="editlabel w3-col m8 s6 l8 w3-margin-left">
+			        <label id="text">Placeholder</label>
+			        <input id="textfield" class="textfield" style="width: 100%; display:none" />
+			    </div>
+				<div class="w3-col m2 s3">
+					<button class="btnDeleteStep"><i class="fa fa-trash"></i></button>
+					<button class="btnSubStep"><i class="fa fa-navicon"></i></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

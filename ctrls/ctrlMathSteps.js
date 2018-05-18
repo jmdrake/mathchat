@@ -1,9 +1,9 @@
 var dbMath = new PouchDB("https://ncoudeadentrockedgmenden:cf6f11d45378cbe2e8a54340113e6a006453ad97@55644244-4beb-4ca8-b177-8ff6d5c3cc0b-bluemix.cloudant.com/mathchat"); 
 
-function ctrlsTasksGetTaskList(parent, callback){
+function ctrlsMathStepsRetrieveAll(parent, callback){
     var results = [];
     dbMath.allDocs({include_docs: true}, function(err, doc) {
-        for(i=0; i<doc.rows.length; i++) {
+        for(var i=0; i<doc.rows.length; i++) {
             if(doc.rows[i].doc["parent"]==parent)
                 results[results.length] = doc.rows[i].doc;
         }
@@ -11,12 +11,12 @@ function ctrlsTasksGetTaskList(parent, callback){
     });
 }
 
-function ctrlsTasksAddTask(name, parent, callback) {
-    var newTask = mathStepTemplate;
-    newTask["name"] = name;
-    newTask["_id"] = Date.now().toString();
-    newTask["parent"] = parent == "" ? null : parent;
-    dbMath.put(newTask).then(function(response){
+function ctrlsMathStepsAdd(text, parent, callback) {
+    var newStep = mathStepTemplate;
+    newStep["text"] = text;
+    newStep["_id"] = Date.now().toString();
+    newStep["parent"] = parent == "" ? null : parent;
+    dbMath.put(newStep).then(function(response){
         dbMath.get(response.id).then(function(newDoc){
             callback(newDoc)
         })
@@ -25,7 +25,7 @@ function ctrlsTasksAddTask(name, parent, callback) {
     });
 }
 
-function ctrlsTasksGetTask(id, callback){
+function ctrlsMathStepsRetrieveStep(id, callback){
     dbMath.get(id).then(function(doc){
         callback(doc)
     }).catch(function (err) {
@@ -33,10 +33,10 @@ function ctrlsTasksGetTask(id, callback){
     });
 }
 
-function ctrlsTasksUpdateTask(doc){
+function ctrlsMathStepsUpdateStep(doc){
     dbMath.put(doc).catch(function(err){console.log(err)});
 }
 
-function ctrlsTasksDeleteTask(task) {
+function ctrlsMathStepsDeleteStep(task) {
     dbMath.remove(task).catch(function(err){console.log(err)});
 }

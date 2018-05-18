@@ -6,8 +6,6 @@ function viewsEditlabelInit() {
     $('.editlabel label').on("click", function(event) {
     	var label = $(this).parent().find("label");
     	var input = $(this).parent().find("input");
-    	var value = label.html();
-    	input.val(value);
     	input.show();
     	label.hide();
     	input.focus();
@@ -20,5 +18,6 @@ function viewsEditlabelInit() {
     	label.html($(input).val());
     	label.show();
     	input.hide();
+    	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);   
     });
 }
